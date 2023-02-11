@@ -26,6 +26,9 @@ class Solution:
                 return True
             hashset.add(n)
         return False
+    def containsDuplicate2(self, nums: List[int]) -> bool:
+        hashset = set(nums)
+        return len(nums) != len(hashset)
 
 def main():
     # Use argparse to handle command line arguments

@@ -20,6 +20,12 @@ class Solution:
             countT[t[i]] = 1 + countT.get(t[i], 0)
         return countS == countT
 
+    def isAnagram2(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        return sorted(s) == sorted(t)
+
 def main():
     # Use argparse to handle command line arguments
     parser = argparse.ArgumentParser(description='A basic Python script template.')

@@ -33,6 +33,12 @@ class Solution:
                 return [prevMap[diff], i]
             prevMap[n] = i
 
+    def twoSum2(self, nums: List[int], target: int) -> List[int]:
+        for i, n in enumerate(nums):
+            diff = target - n
+            if diff in nums:
+                return [i, nums.index(diff)]
+
 def main():
     # Use argparse to handle command line arguments
     parser = argparse.ArgumentParser(description='A basic Python script template.')
