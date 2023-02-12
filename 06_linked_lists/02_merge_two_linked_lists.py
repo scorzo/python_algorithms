@@ -1,29 +1,51 @@
 #!/usr/bin/env python
 
-# - given a graph of plotted points, return the maximum profit from buying and selling one transaction pair
+# MERGE 2 LINKED LISTS
+#
+# - merge 2 SORTED, LINKED LISTS into a single list IN ORDER
 #
 # NOTES
+# - this requires 3 "holders":
+# 1) temp var, aka "tail", which will be a starting point for our combined linked list - this var is moved along combined linked list and always points to the last node we added
 #
-# - uses 2 pointers
-# - l starts on 0, r starts on 1
-# - until r gets to the end of the list:
-# - if l is less than r, record profit if highest so far and move r + 1
-# - otherwise, shift l and r to the right by 1
+# 2 & 3) list1 and list2 point to the respective heads of the 2 lists we are working with - each time we point tail to either list1 or list2, we update the respective variable its "next" node - we use these to do the value comparisons we use to determine which one will be next in out tail list
+#
+# - start by creating a new, dummy node
+#
+#
+# - use 2 variables (list1 and list2) to hold first (lowest value) node from each list
+# - while 2 variables contain node references,
+# - compare values
 
 
 import argparse
 from typing import List
 
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        res = 0
+    def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
+        dummy = ListNode()
+        tail = dummy
 
-        l = 0
-        for r in range(1, len(prices)):
-            if prices[r] < prices[l]:
-                l = r
-            res = max(res, prices[r] - prices[l])
-        return res
+        while list1 and list2:
+            if list1.val < list2.val:
+                tail.next = list1
+                list1 = list1.next
+            else:
+                tail.next = list2
+                list2 = list2.next
+            tail = tail.next
+
+        if list1:
+            tail.next = list1
+        elif list2:
+            tail.next = list2
+
+        return dummy.next
 
 def main():
     # Use argparse to handle command line arguments
@@ -33,7 +55,7 @@ def main():
 
     # call here
     solution = Solution()
-    answer = solution.maxProfit([7,1,5,3,6,4])
+    answer = solution.mergeTwoLists()
     print(answer)
 
 if __name__ == '__main__':

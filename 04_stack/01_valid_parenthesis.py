@@ -1,29 +1,37 @@
 #!/usr/bin/env python
 
-# - given a graph of plotted points, return the maximum profit from buying and selling one transaction pair
+# VALID PARENTHESIS
+#
+# Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+#
+# An input string is valid if:
+#
+# Open brackets must be closed by the same type of brackets.
+# Open brackets must be closed in the correct order.
+# Every close bracket has a corresponding open bracket of the same type.
 #
 # NOTES
-#
-# - uses 2 pointers
-# - l starts on 0, r starts on 1
-# - until r gets to the end of the list:
-# - if l is less than r, record profit if highest so far and move r + 1
-# - otherwise, shift l and r to the right by 1
+# - uses a stack, which is just a list in this case
+# - stack is used to hold the brackets we've seen and haven't found a match for yet - once we find a match, we remove the match from the stack
 
 
 import argparse
 from typing import List
 
 class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        res = 0
+    def isValid(self, s: str) -> bool:
+        Map = {")": "(", "]": "[", "}": "{"}
+        stack = []
 
-        l = 0
-        for r in range(1, len(prices)):
-            if prices[r] < prices[l]:
-                l = r
-            res = max(res, prices[r] - prices[l])
-        return res
+        for c in s:
+            if c not in Map: # must be opening
+                stack.append(c)
+                continue
+            if not stack or stack[-1] != Map[c]: # must be closing - using map, should pair up with last stack item
+                return False
+            stack.pop()
+
+        return not stack
 
 def main():
     # Use argparse to handle command line arguments
@@ -33,7 +41,7 @@ def main():
 
     # call here
     solution = Solution()
-    answer = solution.maxProfit([7,1,5,3,6,4])
+    answer = solution.isValid("()[]{}")
     print(answer)
 
 if __name__ == '__main__':

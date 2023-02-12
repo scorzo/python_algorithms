@@ -1,29 +1,43 @@
 #!/usr/bin/env python
 
-# - given a graph of plotted points, return the maximum profit from buying and selling one transaction pair
+# REVERSE LINKED LIST
 #
-# NOTES
+# - take a linked list and reverse the order
+# - python does not have a linked list type - you need to build a short class
 #
-# - uses 2 pointers
-# - l starts on 0, r starts on 1
-# - until r gets to the end of the list:
-# - if l is less than r, record profit if highest so far and move r + 1
-# - otherwise, shift l and r to the right by 1
+# # reversing
+# - initial solution is ITERATIVE solution and uses 2 POINTERS
+# - pointers are "previous" and "current"
+# - cache the node that current is pointing to
+# - point current to previous (in other words swing pointer around)
+# - shift both pointers to the right and repeat
+# - time complexity: T 0(n) and memory complexity M 0(1)
+#
+# - RECURSIVE solution
+# - T 0(n) and M 0(n) so less efficient
+
 
 
 import argparse
 from typing import List
 
-class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        res = 0
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
-        l = 0
-        for r in range(1, len(prices)):
-            if prices[r] < prices[l]:
-                l = r
-            res = max(res, prices[r] - prices[l])
-        return res
+
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        prev, curr = None, head
+
+        while curr:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+        return prev
 
 def main():
     # Use argparse to handle command line arguments
@@ -33,7 +47,7 @@ def main():
 
     # call here
     solution = Solution()
-    answer = solution.maxProfit([7,1,5,3,6,4])
+    answer = solution.reverseList()
     print(answer)
 
 if __name__ == '__main__':

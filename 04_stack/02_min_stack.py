@@ -1,29 +1,40 @@
 #!/usr/bin/env python
 
-# - given a graph of plotted points, return the maximum profit from buying and selling one transaction pair
+# MIN STACK
+#
+# - write a class that supports stack operations, push, pop (remove off top) and top (get top value) - plus write a method for retrieving min value on stack
+# - note: need to write the min value method with 0(1) complexity time
 #
 # NOTES
 #
-# - uses 2 pointers
-# - l starts on 0, r starts on 1
-# - until r gets to the end of the list:
-# - if l is less than r, record profit if highest so far and move r + 1
-# - otherwise, shift l and r to the right by 1
+# - note that our class supports maintaining 2 parallel stacks that are in sync: main value and min value
+#
+# - the way to write the min value method w/ 0(1) is to have a parallel stack recording the min value so far at every point - each time you pop a value off the top, you still know the min value at the new highest index
+
 
 
 import argparse
 from typing import List
 
-class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        res = 0
+class MinStack:
+    def __init__(self):
+        self.stack = []
+        self.minStack = []
 
-        l = 0
-        for r in range(1, len(prices)):
-            if prices[r] < prices[l]:
-                l = r
-            res = max(res, prices[r] - prices[l])
-        return res
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+        val = min(val, self.minStack[-1] if self.minStack else val)
+        self.minStack.append(val)
+
+    def pop(self) -> None:
+        self.stack.pop()
+        self.minStack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return self.minStack[-1]
 
 def main():
     # Use argparse to handle command line arguments
@@ -33,7 +44,7 @@ def main():
 
     # call here
     solution = Solution()
-    answer = solution.maxProfit([7,1,5,3,6,4])
+    answer = solution.minStack([2,7,11,15], 9)
     print(answer)
 
 if __name__ == '__main__':

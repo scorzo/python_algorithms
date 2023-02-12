@@ -1,29 +1,62 @@
 #!/usr/bin/env python
 
-# - given a graph of plotted points, return the maximum profit from buying and selling one transaction pair
+# REORDER LIST
+#
+# - given a linked list, reorder the list by inserting n-1 list item into position 2, n-2 into position 4, etc.
+# - do not return anything
+# - modify list in place
 #
 # NOTES
 #
-# - uses 2 pointers
-# - l starts on 0, r starts on 1
-# - until r gets to the end of the list:
-# - if l is less than r, record profit if highest so far and move r + 1
-# - otherwise, shift l and r to the right by 1
+# - divide list into 2 parts
+# - if list is odd number, then the middle node will go into second list
+# - note that in the video he uses a slow/fast pointer technique to split the lists instead of the method above - makes sense since this is not an array where we can get count nodes
+# - reverse second list (see REVERSE LINKED LIST technique above)
+# - merge 2 lists (sort of like MERGE 2 LINKED LISTS above)
+#
+# # merging
+# - take 2 linked lists
+# - cache 2nd item in each list
+# - move pointers to first items in each list
+# - point first list item in first list down to 2nd list
+# - point first list item in second list up and diagonally to the right to the 2nd item first list
+# - move pointers to 2nd items in each list
+# - repeat
 
 
 import argparse
 from typing import List
 
-class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        res = 0
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
-        l = 0
-        for r in range(1, len(prices)):
-            if prices[r] < prices[l]:
-                l = r
-            res = max(res, prices[r] - prices[l])
-        return res
+class Solution:
+    def reorderList(self, head: ListNode) -> None:
+        # find middle
+        slow, fast = head, head.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        # reverse second half
+        second = slow.next
+        prev = slow.next = None
+        while second:
+            tmp = second.next
+            second.next = prev
+            prev = second
+            second = tmp
+
+        # merge two halfs
+        first, second = head, prev
+        while second:
+            tmp1, tmp2 = first.next, second.next
+            first.next = second
+            second.next = tmp1
+            first, second = tmp1, tmp2
 
 def main():
     # Use argparse to handle command line arguments
@@ -33,7 +66,7 @@ def main():
 
     # call here
     solution = Solution()
-    answer = solution.maxProfit([7,1,5,3,6,4])
+    answer = solution.reorderList()
     print(answer)
 
 if __name__ == '__main__':

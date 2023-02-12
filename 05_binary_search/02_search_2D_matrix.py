@@ -1,29 +1,45 @@
 #!/usr/bin/env python
 
-# - given a graph of plotted points, return the maximum profit from buying and selling one transaction pair
+# SEARCH 2D MATRIX
 #
-# NOTES
-#
-# - uses 2 pointers
-# - l starts on 0, r starts on 1
-# - until r gets to the end of the list:
-# - if l is less than r, record profit if highest so far and move r + 1
-# - otherwise, shift l and r to the right by 1
+# - find target in SORTED VALUE matrix
+# - solution is a double binary search: get the middle row and see if target is there - if not, remove rows above or below accordingly - once you pin it down to a row, use binary search from example above (BINARY SEARCH)
+# - solution is 0(log m + log n) - note: the log n part is the binary search from above - in the log m part, m is the rows
 
 
 import argparse
 from typing import List
 
 class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        res = 0
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        ROWS, COLS = len(matrix), len(matrix[0])
 
-        l = 0
-        for r in range(1, len(prices)):
-            if prices[r] < prices[l]:
-                l = r
-            res = max(res, prices[r] - prices[l])
-        return res
+        # hone in on the row
+        top, bot = 0, ROWS - 1
+        while top <= bot:
+            row = (top + bot) // 2
+            if target > matrix[row][-1]:
+                top = row + 1
+            elif target < matrix[row][0]:
+                bot = row - 1
+            else:
+                break
+
+        if not (top <= bot):
+            return False
+
+        # hone in on the col
+        row = (top + bot) // 2
+        l, r = 0, COLS - 1
+        while l <= r:
+            m = (l + r) // 2
+            if target > matrix[row][m]:
+                l = m + 1
+            elif target < matrix[row][m]:
+                r = m - 1
+            else:
+                return True
+        return False
 
 def main():
     # Use argparse to handle command line arguments
@@ -33,7 +49,7 @@ def main():
 
     # call here
     solution = Solution()
-    answer = solution.maxProfit([7,1,5,3,6,4])
+    answer = solution.searchMatrix([[1,3,5,7],[10,11,16,20],[23,30,34,60]], 3)  # True
     print(answer)
 
 if __name__ == '__main__':
