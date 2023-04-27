@@ -4,10 +4,19 @@
 #
 # - find max depth of binary tree (path to leaf with most nodes
 #
-# - DEPTH FIRST WITHOUT RECURSION (ITERATIVE)
+# - BREADTH FIRST
 #
-# - seems to be exactly like DFS RECURSION except that it is using a while loop and a stack (just a list of lists [[node,depth]] rather than function calls
-
+# - use deque() to cache nodes - it has a log(1) operational time complexity for popping left vs. a list which is log(n)
+#
+# NOTES:
+#
+# - add root node to queue
+# - while nodes in queue:
+#     for all nodes in queue:
+#         pop node off queue
+#         add left node to queue
+#         add right node to queue
+#     increment layer counter
 
 import argparse
 from typing import List
@@ -19,19 +28,25 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
     def maxDepth(self, root: TreeNode) -> int:
-        stack = [[root, 1]]
-        res = 0
+        q = deque()
+        if root:
+            q.append(root)
 
-        while stack:
-            node, depth = stack.pop()
+        level = 0
 
-            if node:
-                res = max(res, depth)
-                stack.append([node.left, depth + 1])
-                stack.append([node.right, depth + 1])
-        return res
+        while q:
+
+            for i in range(len(q)): # snapshot
+                node = q.popleft()
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            level += 1
+        return level
 
 def main():
     # Use argparse to handle command line arguments

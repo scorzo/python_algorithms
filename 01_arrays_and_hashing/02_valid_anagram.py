@@ -8,6 +8,10 @@
 import argparse
 from typing import List
 
+# create 2 hashmaps and compare
+
+
+
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t):

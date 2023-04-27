@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 
-# - given char string and target int, find the longest string of any repeating single character
-# - note that you can replace target int number of chars with any letter of the alphabet
+# You are given a string s and an integer k.
+# You can choose any character of the string and change it to any other uppercase English character.
+# You can perform this operation at most k times.
+#
+# Return the length of the longest substring containing the same letter you can get after
+# performing the above operations.
 #
 # NOTES
 #
 # - uses sliding window technique
 # - uses two pointers
 # - uses hashmap
-# - note that the hashmap is counting all instances only within the working range
+# - note that the hashmap IS COUNTING ALL INSTANCES ONLY WITHIN WINDOW
 # - for each range of chars within pointers
 #     - find most common char
 #     - subtract number instances common char from target
@@ -21,6 +25,10 @@
 import argparse
 from typing import List
 
+
+# search string looking for max subsequent recurring chars with k replacements
+
+
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         count = {}
@@ -30,6 +38,7 @@ class Solution:
         maxf = 0
         for r in range(len(s)):
             count[s[r]] = 1 + count.get(s[r], 0)
+            # most frequent character in current window
             maxf = max(maxf, count[s[r]])
 
             if (r - l + 1) - maxf > k:
@@ -47,7 +56,7 @@ def main():
 
     # call here
     solution = Solution()
-    answer = solution.characterReplacement("ABAB", 2)
+    answer = solution.characterReplacement("ABAB", 2)   # 4
     print(answer)
 
 if __name__ == '__main__':

@@ -7,10 +7,15 @@
 # - uses sliding window technique
 # - two pointers
 # - use a set ( set() ) to record which chars have been seen and to check for duplicates
-#     - if duplicate, keep removing the leftmost char from the charset until the duplicate char is no longer in the character set - next add the character at pointer r to the charset, measure the distance from l to r pointer and keep if longer than any others you've seen so far
+#     - if duplicate:
+#           keep removing the leftmost char from the charset until the duplicate char is no longer in the character set
+#           - next add the character at pointer r to the charset,
+#           measure the distance from l to r pointer and keep if longer than any others you've seen so far
 
 import argparse
 from typing import List
+
+
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:

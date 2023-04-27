@@ -12,11 +12,16 @@
 #
 # NOTES
 # - uses a stack, which is just a list in this case
-# - stack is used to hold the brackets we've seen and haven't found a match for yet - once we find a match, we remove the match from the stack
+# - stack is used to hold the brackets we've seen and haven't found a match for yet
+# - once we find a match, we remove the match from the stack
 
 
 import argparse
 from typing import List
+
+
+
+
 
 class Solution:
     def isValid(self, s: str) -> bool:

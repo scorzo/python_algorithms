@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-# - given a graph of plotted points, return the maximum profit from buying and selling one transaction pair
+# - given a graph of plotted points,
+# - return the maximum profit from buying and selling one transaction pair
 #
 # NOTES
 #
@@ -13,6 +14,10 @@
 
 import argparse
 from typing import List
+
+
+
+
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:

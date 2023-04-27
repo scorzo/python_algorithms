@@ -23,7 +23,14 @@
 import argparse
 from typing import List
 
+
+
+# given list of ints and target, return 2 indices that add up to target
+
+
+
 class Solution:
+    # subtraction method
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         prevMap = {}  # val -> index
 

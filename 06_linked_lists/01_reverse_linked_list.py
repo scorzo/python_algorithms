@@ -21,12 +21,18 @@
 import argparse
 from typing import List
 
-# Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
         self.val = x
         self.next = None
 
+class solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        # create tmp node
+        prev, curr = None, head
+
+        while curr:
+            tmp = curr.next
 
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:

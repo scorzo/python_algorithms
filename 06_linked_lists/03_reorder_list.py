@@ -5,6 +5,12 @@
 # - given a linked list, reorder the list by inserting n-1 list item into position 2, n-2 into position 4, etc.
 # - do not return anything
 # - modify list in place
+
+
+# left hand
+
+
+
 #
 # NOTES
 #
@@ -35,6 +41,53 @@ class ListNode:
 
 class Solution:
     def reorderList(self, head: ListNode) -> None:
+         # find middle
+         # reverse second half
+         # merge first and second halves
+
+        slow, fast = head, head.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        second = slow.next
+        prev = slow.next = None
+
+        while second.next:
+            tmp = second.next
+            second.next = prev
+            prev = second
+            second = tmp
+
+        first, second = head, prev
+        while second.next:
+            tmp1, tmp2 = first.next, second.next
+            first.next = second
+            second.next = tmp1
+            first,second = tmp1,tmp2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution:
+    def reorderList(self, head: ListNode) -> None:
         # find middle
         slow, fast = head, head.next
         while fast and fast.next:
@@ -42,8 +95,8 @@ class Solution:
             fast = fast.next.next
 
         # reverse second half
-        second = slow.next
-        prev = slow.next = None
+        second = slow.next # use second instead of slow
+        prev = slow.next = None # break the chain
         while second:
             tmp = second.next
             second.next = prev
